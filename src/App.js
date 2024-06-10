@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import CAGRCalculator from './CAGRCalculator';
+import logo from './otech_logo.webp';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header style={{ display: 'flex', alignItems: 'center' }}>
+        <img src={logo} alt="Company Logo" style={{ width: 150, marginLeft: 15, marginRight: 7 }} /> 
+        <h1>CAGR Calculator</h1>
       </header>
+      <main>
+        <CAGRCalculator />
+      </main>
     </div>
   );
 }
