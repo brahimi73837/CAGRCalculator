@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Box, FormControlLabel, Switch, Grid, Divider } from '@mui/material';
-import logo from './otech_logo.webp'
-
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Container, Typography, Box, FormControlLabel, Switch, Grid, Divider, IconButton, Tooltip } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
+import logo from './otech_logo.webp';
 
 function CAGRCalculator() {
   const [startingValue, setStartingValue] = useState('');
   const [endingValue, setEndingValue] = useState('');
-  const [periods, setPeriods] = useState('4'); // Default value set to 4
+  const [years, setYears] = useState('5'); // Default value set to 5
   const [cagr, setCagr] = useState(null);
   const [useQuarters, setUseQuarters] = useState(false);
 
@@ -19,6 +19,43 @@ function CAGRCalculator() {
   const [endingQ3, setEndingQ3] = useState('');
   const [endingQ4, setEndingQ4] = useState('');
 
+  const [startingQuarters, setStartingQuarters] = useState([]);
+  const [endingQuarters, setEndingQuarters] = useState([]);
+
+  useEffect(() => {
+    const getQuarters = () => {
+      const currentDate = new Date();
+      const currentMonth = currentDate.getMonth() + 1;
+      let startYear = currentDate.getFullYear() - 5;
+      let endYear = currentDate.getFullYear();
+
+      let startQuarters, endQuarters;
+
+      if (currentMonth <= 3) {
+        // Jan-Mar
+        startQuarters = [`${startYear} Q1`, `${startYear} Q2`, `${startYear} Q3`, `${startYear} Q4`];
+        endQuarters = [`${endYear - 1} Q1`, `${endYear - 1} Q2`, `${endYear - 1} Q3`, `${endYear} Q1`];
+      } else if (currentMonth <= 6) {
+        // Apr-Jun
+        startQuarters = [`${startYear} Q2`, `${startYear} Q3`, `${startYear} Q4`, `${startYear + 1} Q1`];
+        endQuarters = [`${endYear - 1} Q2`, `${endYear - 1} Q3`, `${endYear - 1} Q4`, `${endYear} Q1`];
+      } else if (currentMonth <= 9) {
+        // Jul-Sep
+        startQuarters = [`${startYear} Q3`, `${startYear} Q4`, `${startYear + 1} Q1`, `${startYear + 1} Q2`];
+        endQuarters = [`${endYear - 1} Q3`, `${endYear - 1} Q4`, `${endYear} Q1`, `${endYear} Q2`];
+      } else {
+        // Oct-Dec
+        startQuarters = [`${startYear} Q4`, `${startYear + 1} Q1`, `${startYear + 1} Q2`, `${startYear + 1} Q3`];
+        endQuarters = [`${endYear - 1} Q4`, `${endYear} Q1`, `${endYear} Q2`, `${endYear} Q3`];
+      }
+
+      setStartingQuarters(startQuarters);
+      setEndingQuarters(endQuarters);
+    };
+
+    getQuarters();
+  }, []);
+
   const calculateCAGR = () => {
     let sv = parseFloat(startingValue);
     let ev = parseFloat(endingValue);
@@ -28,19 +65,34 @@ function CAGRCalculator() {
       ev = parseFloat(endingQ1) + parseFloat(endingQ2) + parseFloat(endingQ3) + parseFloat(endingQ4);
     }
 
-    const n = parseFloat(periods);
+    const n = parseFloat(years);
 
-    if (isNaN(sv) || isNaN(ev) || isNaN(n) || n <= 0) {
+    if (isNaN(sv) || isNaN(ev) || isNaN(n) || n <= 1) {
       setCagr(null);
       return;
     }
 
-    const result = ((ev / sv) ** (1 / n) - 1) * 100;
+    const result = ((ev / sv) ** (1 / (n - 1)) - 1) * 100;
     setCagr(result.toFixed(2));
+  };
+
+  const clearFields = () => {
+    setStartingValue('');
+    setEndingValue('');
+    setStartingQ1('');
+    setStartingQ2('');
+    setStartingQ3('');
+    setStartingQ4('');
+    setEndingQ1('');
+    setEndingQ2('');
+    setEndingQ3('');
+    setEndingQ4('');
+    setCagr(null);
   };
 
   return (
     <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 8, bgcolor: 'background.paper', p: 4, borderRadius: 2 }}>
+      <img src={logo} alt="Company Logo" style={{ width: 100, marginBottom: 16 }} />
       <Typography variant="h4" component="h1" gutterBottom>
         CAGR Calculator
       </Typography>
@@ -49,12 +101,35 @@ function CAGRCalculator() {
         label="Use Quarters"
         sx={{ mb: 2 }}
       />
+      <Tooltip
+        title={
+          <Box sx={{ textAlign: 'left', p: 1 }}>
+            <Typography variant="subtitle2" gutterBottom>
+              To calculate the CAGR using quarters, add the values of the four quarters for the starting and ending periods:
+            </Typography>
+            <Typography variant="body2">
+              <strong>Starting:</strong> {startingQuarters.join(', ')}
+            </Typography>
+            <Typography variant="body2">
+              <strong>Ending:</strong> {endingQuarters.join(', ')}
+            </Typography>
+            <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+              The years in between are included automatically.
+            </Typography>
+          </Box>
+        }
+        arrow
+      >
+        <IconButton>
+          <InfoIcon />
+        </IconButton>
+      </Tooltip>
       <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
         {useQuarters ? (
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField
-                label="Starting Q1"
+                label={`Starting ${startingQuarters[0]}`}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -66,7 +141,7 @@ function CAGRCalculator() {
                 }}
               />
               <TextField
-                label="Starting Q2"
+                label={`Starting ${startingQuarters[1]}`}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -80,7 +155,7 @@ function CAGRCalculator() {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="Starting Q3"
+                label={`Starting ${startingQuarters[2]}`}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -92,7 +167,7 @@ function CAGRCalculator() {
                 }}
               />
               <TextField
-                label="Starting Q4"
+                label={`Starting ${startingQuarters[3]}`}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -106,7 +181,7 @@ function CAGRCalculator() {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="Ending Q1"
+                label={`Ending ${endingQuarters[0]}`}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -118,7 +193,7 @@ function CAGRCalculator() {
                 }}
               />
               <TextField
-                label="Ending Q2"
+                label={`Ending ${endingQuarters[1]}`}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -132,7 +207,7 @@ function CAGRCalculator() {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                label="Ending Q3"
+                label={`Ending ${endingQuarters[2]}`}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -144,7 +219,7 @@ function CAGRCalculator() {
                 }}
               />
               <TextField
-                label="Ending Q4"
+                label={`Ending ${endingQuarters[3]}`}
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -186,12 +261,12 @@ function CAGRCalculator() {
           </>
         )}
         <TextField
-          label="Number of Periods"
+          label="Number of Years"
           variant="outlined"
           fullWidth
           margin="normal"
-          value={periods}
-          onChange={(e) => setPeriods(e.target.value)}
+          value={years}
+          onChange={(e) => setYears(e.target.value)}
           InputLabelProps={{ style: { color: '#B3B3B3' } }}
           InputProps={{
             style: { color: 'white' },
@@ -205,6 +280,15 @@ function CAGRCalculator() {
           onClick={calculateCAGR}
         >
           CALCULATE
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          fullWidth
+          sx={{ mt: 2, py: 1.5 }}
+          onClick={clearFields}
+        >
+          CLEAR
         </Button>
       </Box>
       {cagr !== null && (
@@ -220,7 +304,7 @@ function CAGRCalculator() {
         The formula for calculating the Compound Annual Growth Rate (CAGR) is:
       </Typography>
       <Typography variant="body2" sx={{ my: 2 }}>
-        CAGR = (EV / SV) ^ (1 / n) - 1
+        CAGR = (EV / SV) ^ (1 / (n - 1)) - 1
       </Typography>
       <Typography variant="body1">
         Where:
@@ -232,11 +316,11 @@ function CAGRCalculator() {
         - SV = Starting Value
       </Typography>
       <Typography variant="body2">
-        - n = Number of periods (years)
+        - n = Number of years
       </Typography>
       <Divider sx={{ my: 4 }} />
       <Typography variant="body1" sx={{ color: 'gray', fontStyle: 'italic' }}>
-      Disclaimer: This website was developed by a broke college student in under 3 hours. If you spot any bugs, please let me know. I don't want to end up in jail!
+        Disclaimer: This website was developed by a broke college student in under 3 hours. If you spot any bugs, please let me know. I don't want to end up in jail!
       </Typography>
       <Box sx={{ mt: 6, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <Typography variant="body1">

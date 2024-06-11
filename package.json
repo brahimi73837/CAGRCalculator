@@ -1,4 +1,5 @@
 {
+  "homepage": "https://brahimi73837.github.io/CAGRCalculator",
   "name": "cagr-calculator",
   "version": "0.1.0",
   "private": true,
@@ -14,6 +15,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
@@ -44,6 +47,7 @@
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.5.2",
     "babel-jest": "^27.5.1",
+    "gh-pages": "^6.1.1",
     "jest": "^27.5.1",
     "jest-transform-stub": "^2.0.0"
   }

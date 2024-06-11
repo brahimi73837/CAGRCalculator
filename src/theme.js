@@ -4,25 +4,25 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#E50914', // Netflix red
+      main: '#E50914',
     },
     background: {
-      default: '#141414', // Netflix dark background
-      paper: '#1C1C1C', // Slightly lighter for components
+      default: '#141414', 
+      paper: '#1C1C1C',
     },
     text: {
-      primary: '#ffffff', // White text
-      secondary: '#B3B3B3', // Light grey text for hints
+      primary: '#ffffff', 
+      secondary: '#B3B3B3',
     },
   },
   typography: {
     fontFamily: 'Arial, sans-serif',
     h4: {
-      color: '#ffffff', // Ensure h4 headers are white
-      fontWeight: 'bold', // Make headers bold
+      color: '#ffffff', 
+      fontWeight: 'bold', 
     },
     body1: {
-      color: '#ffffff', // Ensure body text is white
+      color: '#ffffff', 
     },
   },
   components: {
