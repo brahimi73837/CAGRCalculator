@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Typography, Box, FormControlLabel, Switch, Grid, Divider, IconButton, Tooltip } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
-import logo from './otech_logo.webp';
+import newlogo from './Logo_Innova.png';
 
 function CAGRCalculator() {
   const [startingValue, setStartingValue] = useState('');
@@ -91,39 +91,47 @@ function CAGRCalculator() {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 8, bgcolor: 'background.paper', p: 4, borderRadius: 2 }}>
-      <img src={logo} alt="Company Logo" style={{ width: 100, marginBottom: 16 }} />
-      <Typography variant="h4" component="h1" gutterBottom>
+    <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 8, bgcolor: 'background.paper', p: 4, borderRadius: 8 }}>
+      <img src={newlogo} alt="Company Logo" style={{ width: 100, marginBottom: 16 }} />
+      <Typography variant="h4" component="h1" gutterBottom color="primary.main">
         CAGR Calculator
       </Typography>
-      <FormControlLabel
-        control={<Switch checked={useQuarters} onChange={(e) => setUseQuarters(e.target.checked)} />}
-        label="Use Quarters"
-        sx={{ mb: 2 }}
-      />
-      <Tooltip
-        title={
-          <Box sx={{ textAlign: 'left', p: 1 }}>
-            <Typography variant="subtitle2" gutterBottom>
-              To calculate the CAGR using quarters, add the values of the four quarters for the starting and ending periods:
-            </Typography>
-            <Typography variant="body2">
-              <strong>Starting:</strong> {startingQuarters.join(', ')}
-            </Typography>
-            <Typography variant="body2">
-              <strong>Ending:</strong> {endingQuarters.join(', ')}
-            </Typography>
-            <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-              The years in between are included automatically.
-            </Typography>
-          </Box>
-        }
-        arrow
-      >
-        <IconButton>
-          <InfoIcon />
-        </IconButton>
-      </Tooltip>
+      <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={useQuarters}
+              onChange={(e) => setUseQuarters(e.target.checked)}
+              sx={{ color: useQuarters ? 'success.main' : 'text.secondary' }}
+            />
+          }
+          label="Use Quarters"
+          sx={{ color: 'text.secondary' }}
+        />
+        <Tooltip
+          title={
+            <Box sx={{ textAlign: 'left', p: 1, color: 'text.secondary' }}>
+              <Typography variant="subtitle2" gutterBottom>
+                To calculate the CAGR using quarters, add the values of the four quarters for the starting and ending periods:
+              </Typography>
+              <Typography variant="body2">
+                <strong>Starting:</strong> {startingQuarters.join(', ')}
+              </Typography>
+              <Typography variant="body2">
+                <strong>Ending:</strong> {endingQuarters.join(', ')}
+              </Typography>
+              <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+                The years in between are included automatically.
+              </Typography>
+            </Box>
+          }
+          arrow
+        >
+          <IconButton sx={{ color: useQuarters ? 'success.main' : 'text.secondary' }}>
+            <InfoIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
       <Box component="form" noValidate autoComplete="off" sx={{ mt: 2 }}>
         {useQuarters ? (
           <Grid container spacing={2}>
@@ -135,9 +143,9 @@ function CAGRCalculator() {
                 margin="normal"
                 value={startingQ1}
                 onChange={(e) => setStartingQ1(e.target.value)}
-                InputLabelProps={{ style: { color: '#B3B3B3' } }}
+                InputLabelProps={{ style: { color: '#D2DBFF' } }}
                 InputProps={{
-                  style: { color: 'white' },
+                  style: { color: '#FFFFF' },
                 }}
               />
               <TextField
@@ -147,9 +155,9 @@ function CAGRCalculator() {
                 margin="normal"
                 value={startingQ2}
                 onChange={(e) => setStartingQ2(e.target.value)}
-                InputLabelProps={{ style: { color: '#B3B3B3' } }}
+                InputLabelProps={{ style: { color: '#D2DBFF' } }}
                 InputProps={{
-                  style: { color: 'white' },
+                  style: { color: '#FFFFF' },
                 }}
               />
             </Grid>
@@ -161,9 +169,9 @@ function CAGRCalculator() {
                 margin="normal"
                 value={startingQ3}
                 onChange={(e) => setStartingQ3(e.target.value)}
-                InputLabelProps={{ style: { color: '#B3B3B3' } }}
+                InputLabelProps={{ style: { color: '#D2DBFF' } }}
                 InputProps={{
-                  style: { color: 'white' },
+                  style: { color: '#FFFFF' },
                 }}
               />
               <TextField
@@ -173,9 +181,9 @@ function CAGRCalculator() {
                 margin="normal"
                 value={startingQ4}
                 onChange={(e) => setStartingQ4(e.target.value)}
-                InputLabelProps={{ style: { color: '#B3B3B3' } }}
+                InputLabelProps={{ style: { color: '#D2DBFF' } }}
                 InputProps={{
-                  style: { color: 'white' },
+                  style: { color: '#FFFFF' },
                 }}
               />
             </Grid>
@@ -187,9 +195,9 @@ function CAGRCalculator() {
                 margin="normal"
                 value={endingQ1}
                 onChange={(e) => setEndingQ1(e.target.value)}
-                InputLabelProps={{ style: { color: '#B3B3B3' } }}
+                InputLabelProps={{ style: { color: '#D2DBFF' } }}
                 InputProps={{
-                  style: { color: 'white' },
+                  style: { color: '#FFFFF' },
                 }}
               />
               <TextField
@@ -199,9 +207,9 @@ function CAGRCalculator() {
                 margin="normal"
                 value={endingQ2}
                 onChange={(e) => setEndingQ2(e.target.value)}
-                InputLabelProps={{ style: { color: '#B3B3B3' } }}
+                InputLabelProps={{ style: { color: '#D2DBFF' } }}
                 InputProps={{
-                  style: { color: 'white' },
+                  style: { color: '#FFFFF' },
                 }}
               />
             </Grid>
@@ -213,9 +221,9 @@ function CAGRCalculator() {
                 margin="normal"
                 value={endingQ3}
                 onChange={(e) => setEndingQ3(e.target.value)}
-                InputLabelProps={{ style: { color: '#B3B3B3' } }}
+                InputLabelProps={{ style: { color: '#D2DBFF' } }}
                 InputProps={{
-                  style: { color: 'white' },
+                  style: { color: '#FFFFF' },
                 }}
               />
               <TextField
@@ -225,13 +233,13 @@ function CAGRCalculator() {
                 margin="normal"
                 value={endingQ4}
                 onChange={(e) => setEndingQ4(e.target.value)}
-                InputLabelProps={{ style: { color: '#B3B3B3' } }}
+                InputLabelProps={{ style: { color: '#D2DBFF' } }}
                 InputProps={{
-                  style: { color: 'white' },
+                  style: { color: '#FFFFF' },
                 }}
               />
             </Grid>
-          </Grid>
+            </Grid>
         ) : (
           <>
             <TextField
@@ -241,9 +249,9 @@ function CAGRCalculator() {
               margin="normal"
               value={startingValue}
               onChange={(e) => setStartingValue(e.target.value)}
-              InputLabelProps={{ style: { color: '#B3B3B3' } }}
+              InputLabelProps={{ style: { color: 'text.secondary' } }}
               InputProps={{
-                style: { color: 'white' },
+                style: { color: 'primary.main', backgroundColor: 'background.default' },
               }}
             />
             <TextField
@@ -253,9 +261,9 @@ function CAGRCalculator() {
               margin="normal"
               value={endingValue}
               onChange={(e) => setEndingValue(e.target.value)}
-              InputLabelProps={{ style: { color: '#B3B3B3' } }}
+              InputLabelProps={{ style: { color: 'text.secondary' } }}
               InputProps={{
-                style: { color: 'white' },
+                style: { color: 'primary.main', backgroundColor: 'background.default' },
               }}
             />
           </>
@@ -267,14 +275,14 @@ function CAGRCalculator() {
           margin="normal"
           value={years}
           onChange={(e) => setYears(e.target.value)}
-          InputLabelProps={{ style: { color: '#B3B3B3' } }}
+          InputLabelProps={{ style: { color: 'text.secondary' } }}
           InputProps={{
-            style: { color: 'white' },
+            style: { color: 'primary.main', backgroundColor: 'background.default' },
           }}
         />
         <Button
           variant="contained"
-          color="primary"
+          color="secondary"
           fullWidth
           sx={{ mt: 3, py: 1.5 }}
           onClick={calculateCAGR}
@@ -292,12 +300,12 @@ function CAGRCalculator() {
         </Button>
       </Box>
       {cagr !== null && (
-        <Typography variant="h6" component="h2" sx={{ mt: 4 }}>
+        <Typography variant="h4" component="h2" sx={{ mt: 4, color: 'success.main', fontWeight: 'bold', fontFamily: 'Montserrat, sans-serif' }}>
           CAGR: {cagr}%
         </Typography>
       )}
-      <Divider sx={{ my: 4 }} />
-      <Typography variant="h6" component="h2">
+      <Divider sx={{ my: 4, borderColor: 'text.secondary' }} />
+      <Typography variant="h6" component="h2" sx={{ color: 'text.primary' }}>
         Formula Used
       </Typography>
       <Typography variant="body1" sx={{ mt: 2 }}>
@@ -318,16 +326,6 @@ function CAGRCalculator() {
       <Typography variant="body2">
         - n = Number of years
       </Typography>
-      <Divider sx={{ my: 4 }} />
-      <Typography variant="body1" sx={{ color: 'gray', fontStyle: 'italic' }}>
-        Disclaimer: This website was developed by a broke college student in under 3 hours. If you spot any bugs, please let me know. I don't want to end up in jail!
-      </Typography>
-      <Box sx={{ mt: 6, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography variant="body1">
-          Made with ❤️ by Brahim, Apprentice at
-        </Typography>
-        <img src={logo} alt="Company Logo" style={{ width: 100, marginTop: 15 }} />
-      </Box>
     </Container>
   );
 }
